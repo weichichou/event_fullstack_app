@@ -5,6 +5,7 @@ const router = new Router()
 
 //POST(Create)
 router.post('/events', (req, res, next) => {
+    // body of req? Can I put text/string of req?
     Event.create(req.body)
         .then(event => res.json(event))
         .catch(err => next(err))
@@ -42,7 +43,9 @@ router.put('/events/:id', (req, res, next) => {
 router.delete('/events/:id', (req, res, next) => {
     // use findByPk to destroy?
     Event.destroy({ where: {id: req.params.id} })
-    // 當我不回傳number（下面這句），東西還是有被刪除，但是沒有跑回來 
+    // 當我不回傳number（下面這句），東西還是有被刪除，但是就hanging there...
+    // 所以一定要有res.send(sth)嗎？
+    // number 不放在 { } 可以嗎？
         .then(number => res.send({ number }))
         .catch(next)
 })
